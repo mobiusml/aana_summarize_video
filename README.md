@@ -1,45 +1,6 @@
-# Aana Application Template
+# Summarize Video App
 
-[Aana SDK](https://github.com/mobiusml/aana_sdk) is a powerful framework for building multimodal applications. It facilitates the large-scale deployment of machine learning models, including those for vision, audio, and language, and supports Retrieval-Augmented Generation (RAG) systems. This enables the development of advanced applications such as search engines, recommendation systems, and data insights platforms.
-
-This repository contains a template that you can use to start building your own Aana application. It will help you get started with the Aana SDK and provide you with a basic structure for your application and its dependencies.
-
-## How to use this template
-
-1. Click on [Use this template](https://github.com/mobiusml/aana_app_template/generate).
-2. Give your repository a name and click on "Create repository". The name of the repository will also be the name of your application and the Python package.
-3. Wait for the first workflow to finish. This will rename the package to match the repository name.
-4. Clone the repository to your local machine and start building your application.
-5. Change the [LICENSE](/LICENSE) file to match your project's license. The default license is the Apache License 2.0.
-
-## Getting started
-
-The project template uses [Poetry](https://python-poetry.org/) for dependency management. To install the project, run the following commands:
-
-```bash
-poetry install
-```
-
-See [Tutorial](https://github.com/mobiusml/aana_sdk/blob/main/docs/tutorial.md) for more information on how to build your application.
-
-## Project structure
-
-```
-aana_summarize_video/
-├── config/                   | various configs, including settings, deployments and endpoints
-│   ├── endpoints.py          | list of endpoints to deploy
-│   ├── deployments.py        | list of deployments (models) to deploy
-│   └── settings.py           | app settings
-├── core/                     | core models and functionality
-│   ├── models/               | data models
-│   └── prompts/              | prompt templates for LLMs
-├── deployments/              | custom deployments
-├── endpoints/                | endpoint classes for the app
-├── exceptions/               | custom exception classes
-├── utils/                    | various utility functionality
-└── app.py                    | main application file
-```
-
+**Summarize Video App** is an Aana application that summarizes a video by extracting transcription from the audio and generating a summary using a Language Model (LLM). This application is a part of the [tutorial](https://mobiusml.github.io/aana_sdk/pages/tutorial/) on how to build multimodal applications with [Aana SDK](https://github.com/mobiusml/aana_sdk).
 
 ## Installation
 
@@ -98,7 +59,7 @@ Once the application is running, you will see the message `Deployed successfully
 
 > **⚠️ Warning**
 >
-> If the application is using GPU, make sure that the GPU is available and the application can access it.
+> The applications require 1 GPUs to run.
 >
 > The applications will detect the available GPU automatically but you need to make sure that `CUDA_VISIBLE_DEVICES` is set correctly.
 > 
@@ -108,8 +69,8 @@ Once the application is running, you will see the message `Deployed successfully
 
 2. Send a POST request to the app.
 
-For example, if your application has `/summary` endpoint that accepts videos, you can send a POST request like this:
-
 ```bash
-curl -X POST http://127.0.0.1:8000/summary -Fbody='{"video":{"url":"https://www.youtube.com/watch?v=VhJFyyukAzA"}}'
+curl -X POST http://127.0.0.1:8000/video/summarize -Fbody='{"video":{"url":"https://www.youtube.com/watch?v=VhJFyyukAzA"}}'
 ```
+
+See [tutorial](https://mobiusml.github.io/aana_sdk/pages/tutorial/) for more information.
