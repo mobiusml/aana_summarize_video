@@ -1,25 +1,40 @@
-deployments: list[dict] = []
+from transformers import BitsAndBytesConfig
+from aana.deployments.hf_text_generation_deployment import (
+    HfTextGenerationConfig,
+    HfTextGenerationDeployment,
+)
+from aana.deployments.whisper_deployment import (
+    WhisperComputeType,
+    WhisperConfig,
+    WhisperDeployment,
+    WhisperModelSize,
+)
 
-# Add deployments for models that you want to deploy here.
-#
-# For example:
-# from aana.deployments.whisper_deployment import (
-#     WhisperComputeType,
-#     WhisperConfig,
-#     WhisperDeployment,
-#     WhisperModelSize,
-# )
-# asr_deployment = WhisperDeployment.options(
-#     num_replicas=1,
-#     ray_actor_options={"num_gpus": 0.1},
-#     user_config=WhisperConfig(
-#         model_size=WhisperModelSize.MEDIUM,
-#         compute_type=WhisperComputeType.FLOAT16,
-#     ).model_dump(mode="json"),
-# )
-# deployments.append({"name": "asr_deployment", "instance": asr_deployment})
-#
-# You can use predefined deployments from the Aana SDK or create your own.
-# See https://github.com/mobiusml/aana_sdk/blob/main/docs/integrations.md for the list of predefined deployments.
-#
-# If you want to create your own deployment, put your deployment classes in a separate files in the `deployments` directory and import them here.
+asr_deployment = WhisperDeployment.options(
+    num_replicas=1,
+    ray_actor_options={"num_gpus": 0.25},
+    user_config=WhisperConfig(
+        model_size=WhisperModelSize.MEDIUM,
+        compute_type=WhisperComputeType.FLOAT16,
+    ).model_dump(mode="json"),
+)
+
+llm_deployment = HfTextGenerationDeployment.options(
+    num_replicas=1,
+    ray_actor_options={"num_gpus": 0.25},
+    user_config=HfTextGenerationConfig(
+        model_id="microsoft/Phi-3-mini-4k-instruct",
+        model_kwargs={
+            "trust_remote_code": True,
+            "quantization_config": BitsAndBytesConfig(
+                load_in_8bit=False, load_in_4bit=True
+            ),
+        },
+    ).model_dump(mode="json"),
+)
+
+
+deployments: list[dict] = [
+    {"name": "asr_deployment", "instance": asr_deployment},
+    {"name": "llm_deployment", "instance": llm_deployment},
+]

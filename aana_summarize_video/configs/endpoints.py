@@ -1,17 +1,26 @@
-endpoints: list[dict] = []
+from aana_summarize_video.endpoints.summarize_video import SummarizeVideoEndpoint
+from aana_summarize_video.endpoints.summarize_video_stream import (
+    SummarizeVideoStreamEndpoint,
+)
+from aana_summarize_video.endpoints.transcribe_video import TranscribeVideoEndpoint
 
-# Add your endpoints here.
-#
-# For example:
-# endpoints.append(
-#     {
-#         "name": "predict",
-#         "path": "/predict",
-#         "summary": "Predict the class of an image.",
-#         "endpoint_cls": PredictEndpoint,
-#     }
-# )
-#
-# Endpoints can be created by inheriting from the `Endpoint` class.
-# Put your endpoint classes in a separate files in the `endpoints` directory and import them here.
-# See https://github.com/mobiusml/aana_sdk/tree/main?tab=readme-ov-file#endpoints in how to create endpoints.
+endpoints: list[dict] = [
+    {
+        "name": "transcribe_video",
+        "path": "/video/transcribe",
+        "summary": "Transcribe a video",
+        "endpoint_cls": TranscribeVideoEndpoint,
+    },
+    {
+        "name": "summarize_video",
+        "path": "/video/summarize",
+        "summary": "Summarize a video",
+        "endpoint_cls": SummarizeVideoEndpoint,
+    },
+    {
+        "name": "summarize_video_stream",
+        "path": "/video/summarize_stream",
+        "summary": "Summarize a video with streaming output",
+        "endpoint_cls": SummarizeVideoStreamEndpoint,
+    },
+]
