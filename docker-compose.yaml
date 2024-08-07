@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  postgres:
+    restart: always
+    container_name: aana_summarize_video_db
+    image: postgres
+    command: postgres -c 'max_connections=1000'
+    healthcheck:
+      test: /usr/bin/pg_isready
+      timeout: 45s
+      interval: 10s
+      retries: 10
+    ports:
+      - '15430:15430'
+    expose:
+      - 15430
+    environment:
+      PGPASSWORD: '${POSTGRES_PASSWORD:-Yf?5nX39}'
+      PGUSER: '${POSTGRES_USER:-aana_db_user}'
+      PGDATABASE: '${POSTGRES_DB:-aana_db}'
+      POSTGRES_PASSWORD: '${POSTGRES_PASSWORD:-Yf?5nX39}'
+      POSTGRES_USER: '${POSTGRES_USER:-aana_db_user}'
+      POSTGRES_DB: '${POSTGRES_DB:-aana_db}'
+      PGPORT: '15430'
+      PGDATA: '/pgdata'
+    volumes:
+      - pg_data:/pgdata
+    
+  aana_sdk:
+    restart: always
+    container_name: aana_summarize_video_sdk
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - 8000:8000
+    expose:
+      - '8000'
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      CUDA_VISIBLE_DEVICES: '${CUDA_VISIBLE_DEVICES}'
+      HF_HUB_ENABLE_HF_TRANSFER: '${HF_HUB_ENABLE_HF_TRANSFER:-1}'
+      HF_TOKEN: '${HF_TOKEN}'
+      NUM_WORKERS: '${NUM_WORKERS:-2}'
+      DB_CONFIG: '{"datastore_type":"postgresql","datastore_config":{"host":"postgres","port":"15430","user":"${POSTGRES_USER:-aana_db_user}","password":"${POSTGRES_PASSWORD:-Yf?5nX39}","database":"${POSTGRES_DB:-aana_db}"}}'
+    volumes:
+      - sdk_data:/tmp/aana
+
+volumes:
+  pg_data:
+    name: aana_summarize_video_postgres_data
+  sdk_data:
+    name: aana_summarize_video_sdk_data
+
