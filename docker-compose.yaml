@@ -27,16 +27,18 @@ services:
     volumes:
       - pg_data:/pgdata
     
-  aana_sdk:
+  aana_summarize_video_app:
     restart: always
-    container_name: aana_summarize_video_sdk
+    container_name: aana_summarize_video_app
     depends_on:
       postgres:
         condition: service_healthy
     ports:
-      - 8000:8000
+      - 8000:8000   # request server
+      - 18265:8265  # ray dashboard
     expose:
       - '8000'
+      - '18265'
     build:
       context: .
       dockerfile: Dockerfile
@@ -44,14 +46,18 @@ services:
       CUDA_VISIBLE_DEVICES: '${CUDA_VISIBLE_DEVICES}'
       HF_HUB_ENABLE_HF_TRANSFER: '${HF_HUB_ENABLE_HF_TRANSFER:-1}'
       HF_TOKEN: '${HF_TOKEN}'
+      HF_DATASETS_CACHE: /root/.cache/huggingface
       NUM_WORKERS: '${NUM_WORKERS:-2}'
+      TMP_DATA_DIR: /tmp/aana_data
       DB_CONFIG: '{"datastore_type":"postgresql","datastore_config":{"host":"postgres","port":"15430","user":"${POSTGRES_USER:-aana_db_user}","password":"${POSTGRES_PASSWORD:-Yf?5nX39}","database":"${POSTGRES_DB:-aana_db}"}}'
     volumes:
-      - sdk_data:/tmp/aana
+      - app_data:/tmp/aana
+      - hf_datasets_cache:/root/.cache/huggingface
 
 volumes:
   pg_data:
     name: aana_summarize_video_postgres_data
-  sdk_data:
-    name: aana_summarize_video_sdk_data
-
+  app_data:
+    name: aana_summarize_video_app_data
+  hf_datasets_cache:
+    name: hf_datasets_cache
