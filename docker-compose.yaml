@@ -42,6 +42,11 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    deploy:
+      resources:
+        reservations:
+          devices:
+              - capabilities: ["gpu"]
     environment:
       CUDA_VISIBLE_DEVICES: '${CUDA_VISIBLE_DEVICES}'
       HF_HUB_ENABLE_HF_TRANSFER: '${HF_HUB_ENABLE_HF_TRANSFER:-1}'
