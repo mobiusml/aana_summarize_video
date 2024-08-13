@@ -74,3 +74,32 @@ curl -X POST http://127.0.0.1:8000/video/summarize -Fbody='{"video":{"url":"http
 ```
 
 See [tutorial](https://mobiusml.github.io/aana_sdk/pages/tutorial/) for more information.
+
+## Running inside the Docker
+
+To run the project via docker, a dockerfile and docker-compose config are available in the repo. you can run it via docker-compose or directly via docker as follows:
+
+### Deploying via docker-compose
+
+```bash
+CUDA_VISIBLE_DEVICES=0 docker-compose up
+```
+The application needs 1 GPU to run, so you need to specify `CUDA_VISIBLE_DEVICES` in the command.
+The docker-compose config, would deploy a Postgres instance besides the application and link them to each other. If you already have a database somewhere you can edit the docker-compose config, remove the Postgres and set the Postgres address via the environment variables.
+The app would be available at `http://localhost:8000` in the host server and the Postgres would be accessible via port 15430.
+You can check the [Docker Compose Config](./docker-compose.yaml) to see all available variables you can set for running the application.
+
+### Deploying via docker
+
+To deploy the application by docker directly follow these steps:
+
+1. Build the docker image by running:
+
+```bash
+docker build --no-cache -t aana_sumarize_video:latest .
+```
+
+2. Run the the image:
+```bash
+docker run --rm -it -v ~/.cache:/root/.cache -e CUDA_VISIBLE_DEVICES=0 -e DB_CONFIG=$DB_CONFIG -p 8000:8000 aana_sumarize_video:latest
+```

@@ -35,10 +35,8 @@ services:
         condition: service_healthy
     ports:
       - 8000:8000   # request server
-      - 18265:8265  # ray dashboard
     expose:
       - '8000'
-      - '18265'
     build:
       context: .
       dockerfile: Dockerfile
