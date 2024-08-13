@@ -96,10 +96,10 @@ To deploy the application by docker directly follow these steps:
 1. Build the docker image by running:
 
 ```bash
-docker build --no-cache -t aana_sumarize_video:latest .
+docker build --no-cache -t aana_summarize_video:latest .
 ```
 
 2. Run the the image:
 ```bash
-docker run --rm -it -v ~/.cache:/root/.cache -e CUDA_VISIBLE_DEVICES=0 -e DB_CONFIG=$DB_CONFIG -p 8000:8000 aana_sumarize_video:latest
+docker run --rm -it -v ~/.cache:/root/.cache -e CUDA_VISIBLE_DEVICES=0 -e DB_CONFIG=$DB_CONFIG -p 8000:8000 aana_summarize_video:latest
 ```
