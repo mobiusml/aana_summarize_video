@@ -2,13 +2,13 @@
 
 [[package]]
 name = "aana"
-version = "0.2.2"
+version = "0.2.2.1"
 description = "Multimodal SDK"
 optional = false
 python-versions = "<4.0,>=3.10"
 files = [
-    {file = "aana-0.2.2-py3-none-any.whl", hash = "sha256:1eb5f9850109885819f2364d1210095d99b91a04b112cfadca6e77750312da32"},
-    {file = "aana-0.2.2.tar.gz", hash = "sha256:a327f7ae8de2184376175c51847265336857ad5b461072aea8bd1c8a54104f9f"},
+    {file = "aana-0.2.2.1-py3-none-any.whl", hash = "sha256:8123aef0c40a1f72489e61fcc587c0afff356e9dcb65889496bd968be9ca6ec9"},
+    {file = "aana-0.2.2.1.tar.gz", hash = "sha256:aa32d8f6f7e891c81a4aa91adbc68f1ee2de7e00f5e97bb606887528b56e7d82"},
 ]
 
 [package.dependencies]
@@ -17,13 +17,10 @@ alembic = ">=1.12.1,<2.0.0"
 av = "==11.*"
 bitsandbytes = ">=0.42.0,<0.43.0"
 decord = ">=0.6.0,<0.7.0"
-deepdiff = ">=6.7.0,<7.0.0"
-diffusers = ">=0.23.1,<0.24.0"
 fastapi = ">=0.111.0,<0.112.0"
 faster-whisper = ">=1.0.1"
 hf-transfer = ">=0.1.6,<0.2.0"
 numpy = ">=1.17,<2"
-onnxruntime = "1.16.1"
 opencv-python-headless = ">=4.8.1.78,<5.0.0.0"
 orjson = ">=3.10.3,<4.0.0"
 portpicker = ">=1.6.0,<2.0.0"
@@ -43,7 +40,7 @@ torchaudio = ">=2.0.0"
 torchvision = ">=0.15.0"
 transformers = ">=4.44.0"
 vllm = ">=0.5.0.post1,<0.6.0"
-yt-dlp = ">=2024.4.9"
+yt-dlp = ">=2024.08.06"
 
 [[package]]
 name = "accelerate"
@@ -1124,54 +1121,6 @@ files = [
 numpy = ">=1.14.0"
 
 [[package]]
-name = "deepdiff"
-version = "6.7.1"
-description = "Deep Difference and Search of any Python object/data. Recreate objects by adding adding deltas to each other."
-optional = false
-python-versions = ">=3.7"
-files = [
-    {file = "deepdiff-6.7.1-py3-none-any.whl", hash = "sha256:58396bb7a863cbb4ed5193f548c56f18218060362311aa1dc36397b2f25108bd"},
-    {file = "deepdiff-6.7.1.tar.gz", hash = "sha256:b367e6fa6caac1c9f500adc79ada1b5b1242c50d5f716a1a4362030197847d30"},
-]
-
-[package.dependencies]
-ordered-set = ">=4.0.2,<4.2.0"
-
-[package.extras]
-cli = ["click (==8.1.3)", "pyyaml (==6.0.1)"]
-optimize = ["orjson"]
-
-[[package]]
-name = "diffusers"
-version = "0.23.1"
-description = "State-of-the-art diffusion in PyTorch and JAX."
-optional = false
-python-versions = ">=3.8.0"
-files = [
-    {file = "diffusers-0.23.1-py3-none-any.whl", hash = "sha256:92c121c98bce790b4e6acd9add3d2ef418e5d666ab8892edaa7a07fca15aa8e1"},
-    {file = "diffusers-0.23.1.tar.gz", hash = "sha256:a2ca56bce53c7f8fc29e7e3aae0af1dbf5d776d9afc7c937fb01c95c1789da03"},
-]
-
-[package.dependencies]
-filelock = "*"
-huggingface-hub = ">=0.13.2"
-importlib-metadata = "*"
-numpy = "*"
-Pillow = "*"
-regex = "!=2019.12.17"
-requests = "*"
-safetensors = ">=0.3.1"
-
-[package.extras]
-dev = ["Jinja2", "accelerate (>=0.11.0)", "black (>=23.1,<24.0)", "compel (==0.1.8)", "datasets", "flax (>=0.4.1)", "hf-doc-builder (>=0.3.0)", "invisible-watermark (>=0.2.0)", "isort (>=5.5.4)", "jax (>=0.4.1)", "jaxlib (>=0.4.1)", "k-diffusion (>=0.0.12)", "librosa", "omegaconf", "parameterized", "protobuf (>=3.20.3,<4)", "pytest", "pytest-timeout", "pytest-xdist", "requests-mock (==1.10.0)", "ruff (==0.0.280)", "safetensors (>=0.3.1)", "scipy", "sentencepiece (>=0.1.91,!=0.1.92)", "tensorboard", "torch (>=1.4)", "torchvision", "transformers (>=4.25.1)", "urllib3 (<=2.0.0)"]
-docs = ["hf-doc-builder (>=0.3.0)"]
-flax = ["flax (>=0.4.1)", "jax (>=0.4.1)", "jaxlib (>=0.4.1)"]
-quality = ["black (>=23.1,<24.0)", "hf-doc-builder (>=0.3.0)", "isort (>=5.5.4)", "ruff (==0.0.280)", "urllib3 (<=2.0.0)"]
-test = ["Jinja2", "compel (==0.1.8)", "datasets", "invisible-watermark (>=0.2.0)", "k-diffusion (>=0.0.12)", "librosa", "omegaconf", "parameterized", "pytest", "pytest-timeout", "pytest-xdist", "requests-mock (==1.10.0)", "safetensors (>=0.3.1)", "scipy", "sentencepiece (>=0.1.91,!=0.1.92)", "torchvision", "transformers (>=4.25.1)"]
-torch = ["accelerate (>=0.11.0)", "torch (>=1.4)"]
-training = ["Jinja2", "accelerate (>=0.11.0)", "datasets", "protobuf (>=3.20.3,<4)", "tensorboard"]
-
-[[package]]
 name = "dill"
 version = "0.3.7"
 description = "serialize all of Python"
@@ -2160,25 +2109,6 @@ files = [
     {file = "idna-3.7-py3-none-any.whl", hash = "sha256:82fee1fc78add43492d3a1898bfa6d8a904cc97d8427f683ed8e798d07761aa0"},
     {file = "idna-3.7.tar.gz", hash = "sha256:028ff3aadf0609c1fd278d8ea3089299412a7a8b9bd005dd08b9f8285bcb5cfc"},
 ]
-
-[[package]]
-name = "importlib-metadata"
-version = "8.2.0"
-description = "Read metadata from Python packages"
-optional = false
-python-versions = ">=3.8"
-files = [
-    {file = "importlib_metadata-8.2.0-py3-none-any.whl", hash = "sha256:11901fa0c2f97919b288679932bb64febaeacf289d18ac84dd68cb2e74213369"},
-    {file = "importlib_metadata-8.2.0.tar.gz", hash = "sha256:72e8d4399996132204f9a16dcc751af254a48f8d1b20b9ff0f98d4a8f901e73d"},
-]
-
-[package.dependencies]
-zipp = ">=0.5"
-
-[package.extras]
-doc = ["furo", "jaraco.packaging (>=9.3)", "jaraco.tidelift (>=1.4)", "rst.linker (>=1.9)", "sphinx (>=3.5)", "sphinx-lint"]
-perf = ["ipython"]
-test = ["flufl.flake8", "importlib-resources (>=1.3)", "jaraco.test (>=5.4)", "packaging", "pyfakefs", "pytest (>=6,!=8.1.*)", "pytest-checkdocs (>=2.4)", "pytest-cov", "pytest-enabler (>=2.2)", "pytest-mypy", "pytest-perf (>=0.9.2)", "pytest-ruff (>=0.2.1)"]
 
 [[package]]
 name = "interegular"
@@ -3813,20 +3743,6 @@ checking = ["black", "blackdoc", "flake8", "isort", "mypy", "mypy-boto3-s3", "ty
 document = ["ase", "cmaes (>=0.10.0)", "fvcore", "lightgbm", "matplotlib (!=3.6.0)", "pandas", "pillow", "plotly (>=4.9.0)", "scikit-learn", "sphinx", "sphinx-copybutton", "sphinx-gallery", "sphinx-plotly-directive", "sphinx-rtd-theme (>=1.2.0)", "torch", "torchvision"]
 optional = ["boto3", "cmaes (>=0.10.0)", "google-cloud-storage", "matplotlib (!=3.6.0)", "pandas", "plotly (>=4.9.0)", "redis", "scikit-learn (>=0.24.2)", "scipy", "torch"]
 test = ["coverage", "fakeredis[lua]", "kaleido", "moto", "pytest", "scipy (>=1.9.2)", "torch"]
-
-[[package]]
-name = "ordered-set"
-version = "4.1.0"
-description = "An OrderedSet is a custom MutableSet that remembers its order, so that every"
-optional = false
-python-versions = ">=3.7"
-files = [
-    {file = "ordered-set-4.1.0.tar.gz", hash = "sha256:694a8e44c87657c59292ede72891eb91d34131f6531463aab3009191c77364a8"},
-    {file = "ordered_set-4.1.0-py3-none-any.whl", hash = "sha256:046e1132c71fcf3330438a539928932caf51ddbc582496833e23de611de14562"},
-]
-
-[package.extras]
-dev = ["black", "mypy", "pytest"]
 
 [[package]]
 name = "orjson"
@@ -7850,22 +7766,7 @@ secretstorage = ["cffi", "secretstorage"]
 static-analysis = ["autopep8 (>=2.0,<3.0)", "ruff (>=0.5.0,<0.6.0)"]
 test = ["pytest (>=8.1,<9.0)"]
 
-[[package]]
-name = "zipp"
-version = "3.19.2"
-description = "Backport of pathlib-compatible object wrapper for zip files"
-optional = false
-python-versions = ">=3.8"
-files = [
-    {file = "zipp-3.19.2-py3-none-any.whl", hash = "sha256:f091755f667055f2d02b32c53771a7a6c8b47e1fdbc4b72a8b9072b3eef8015c"},
-    {file = "zipp-3.19.2.tar.gz", hash = "sha256:bf1dcf6450f873a13e952a29504887c89e6de7506209e5b1bcc3460135d4de19"},
-]
-
-[package.extras]
-doc = ["furo", "jaraco.packaging (>=9.3)", "jaraco.tidelift (>=1.4)", "rst.linker (>=1.9)", "sphinx (>=3.5)", "sphinx-lint"]
-test = ["big-O", "importlib-resources", "jaraco.functools", "jaraco.itertools", "jaraco.test", "more-itertools", "pytest (>=6,!=8.1.*)", "pytest-checkdocs (>=2.4)", "pytest-cov", "pytest-enabler (>=2.2)", "pytest-ignore-flaky", "pytest-mypy", "pytest-ruff (>=0.2.1)"]
-
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "8767a627a0ab6e623cf05b2ee7a5fb8df4f49a080368de6432987df3fd932cbb"
+content-hash = "564d31c6f0ecc6710ebc06e7286c2c69a4f7a5bac8ab256f322640b3f9e5e01c"

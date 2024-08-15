@@ -1,5 +1,5 @@
 # Use NVIDIA CUDA as base image
-FROM nvidia/cuda:12.4.1-devel-ubuntu22.04
+FROM nvidia/cuda:12.1.1-cudnn8-devel-ubuntu22.04
 
 # Set working directory
 WORKDIR /app
@@ -8,8 +8,7 @@ WORKDIR /app
 ENV DEBIAN_FRONTEND=non-interactive
 
 # Install required libraries, tools, and Python3
-RUN apt-get update && apt-get install -y libgl1 libglib2.0-0 ffmpeg curl git python3.10 python3-pip nvidia-cuda-toolkit
-ENV LD_LIBRARY_PATH=/usr/local/cuda/compat:$LD_LIBRARY_PATH
+RUN apt-get update && apt-get install -y ffmpeg curl git python3.10 python3-pip
 
 # Install poetry
 RUN curl -sSL https://install.python-poetry.org | python3 -
@@ -25,7 +24,7 @@ COPY . /app
 RUN poetry install
 
 # Install flash attention
-RUN poetry run pip install torch torchvision --index-url https://download.pytorch.org/whl/cu124
+RUN poetry run pip install torch --index-url https://download.pytorch.org/whl/cu121
 RUN poetry run pip install flash-attn --no-build-isolation
 
 # Disable buffering for stdout and stderr to get the logs in real time

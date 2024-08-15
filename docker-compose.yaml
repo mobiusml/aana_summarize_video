@@ -54,7 +54,7 @@ services:
       TMP_DATA_DIR: /tmp/aana_data
       DB_CONFIG: '{"datastore_type":"postgresql","datastore_config":{"host":"postgres","port":"15430","user":"${POSTGRES_USER:-aana_db_user}","password":"${POSTGRES_PASSWORD:-Yf?5nX39}","database":"${POSTGRES_DB:-aana_db}"}}'
     volumes:
-      - app_data:/tmp/aana
+      - app_data:/tmp/aana_data
       - hf_datasets_cache:/root/.cache/huggingface
 
 volumes:
