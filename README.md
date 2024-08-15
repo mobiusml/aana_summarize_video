@@ -99,7 +99,7 @@ docker run \
     --name aana_summarize_video_app \
     -v ~/aana/tmp:/tmp/aana_data \
     -v ~/.cache/huggingface:/root/.cache/huggingface \
-    -v ~/aana/db:/tmp/db/aana_db.sqlite \
+    -v ~/aana/db:/tmp/db \
     -e CUDA_VISIBLE_DEVICES=0 \
     -e HF_DATASETS_CACHE=/root/.cache/huggingface \
     -e TMP_DATA_DIR=/tmp/aana_data \
