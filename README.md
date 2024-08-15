@@ -73,36 +73,78 @@ Once the application is running, you will see the message `Deployed successfully
 curl -X POST http://127.0.0.1:8000/video/summarize -Fbody='{"video":{"url":"https://www.youtube.com/watch?v=VhJFyyukAzA"}}'
 ```
 
-See [tutorial](https://mobiusml.github.io/aana_sdk/pages/tutorial/) for more information.
+See [Tutorial](https://mobiusml.github.io/aana_sdk/pages/tutorial/) for more information.
 
 ## Running within Docker
+To run the application in a Docker container, we offer a Dockerfile and a docker-compose configuration in the repository. The Aana SDK requires a database for storage and supports both SQLite and PostgreSQL. If you prefer SQLite, you can use just the Dockerfile. For better performance, you can use the docker-compose file, which will automatically set up a PostgreSQL instance alongside the application. 
 
-To execute the project using Docker, you will find both a Dockerfile and a Docker Compose configuration file in the repository. These resources allow you to run the project seamlessly. You have the option to launch it using Docker Compose for a more streamlined approach, or you can opt to use Docker directly. Here’s how you can do both:
+### Deploying via docker
+To successfully run the application within a Docker container, please follow the steps outlined below:
+
+1. Build the Docker Image
+Begin by building the Docker image for the application. You can accomplish this by executing the following command in your terminal:
+
+```bash
+docker build -t aana_summarize_video:latest --build-arg INSTALL_FLASH_ATTEN=false .
+```
+
+This command creates a new Docker image tagged as `aana_summarize_video:latest`, with an optional build argument to skip the installation of Flash Attention.
+
+2. Execute the Docker Container
+Once the image is built, you can run the application inside a Docker container using the following command:
+
+```bash
+export DB_CONFIG='{"datastore_type": "sqlite", "datastore_config": {"path": "/tmp/db/aana_db.sqlite"}}'
+docker run \
+    --name aana_summarize_video_app \
+    -v ~/aana/tmp:/tmp/aana_data \
+    -v ~/.cache/huggingface:/root/.cache/huggingface \
+    -v ~/aana/db:/tmp/db/aana_db.sqlite \
+    -e CUDA_VISIBLE_DEVICES=0 \
+    -e HF_DATASETS_CACHE=/root/.cache/huggingface \
+    -e TMP_DATA_DIR=/tmp/aana_data \
+    -e DB_CONFIG=$DB_CONFIG \
+    -p 8000:8000 \
+    aana_summarize_video:latest
+```
+
+**Configuration Details:**
+
+In the above command:
+
+- `--name aana_summarize_video_app`: Assigns a name for the running container for easy reference.
+
+- **Volume Mounts (-v):** Specify directories to share files between your host and the container. 
+
+  - `~/aana/tmp` is mapped to /tmp/aana_data in the container.
+  - `~/.cache/huggingface` is used to store Hugging Face model data, ensuring that the cache is preserved between container runs.
+  - `~/aana/db` is linked to the SQLite database file.
+
+- **Environment Variables (-e):**
+
+  - `CUDA_VISIBLE_DEVICES=0`: Indicates which GPU device to use, if available.
+  - `HF_DATASETS_CACHE`: Specifies the path for caching Hugging Face datasets.
+  - `TMP_DATA_DIR`: Sets the temporary data directory for the application.
+  - `DB_CONFIG`: Contains the configuration for the database, which by default is set to use SQLite. This configuration can be customized as needed.
 
 ### Deploying via docker-compose
+This Docker Compose configuration automatically builds the Docker image for your application. If you want to include the flash-atten feature, set INSTALL_FLASH_ATTEN to true during the build process. To deploy the app with PostgreSQL using Docker Compose, follow these steps: 
+
+1. Build the images by running:
+
+```bash
+INSTALL_FLASH_ATTEN=false docker-compose build
+```
+
+2. Run the containers with:
 
 ```bash
 CUDA_VISIBLE_DEVICES=0 docker-compose up
 ```
 
 The application requires one GPU to operate, so you'll need to set `CUDA_VISIBLE_DEVICES` in the command.
-The docker-compose configuration will deploy a PostgreSQL instance alongside the application and establish a connection between them. If you already have a database set up elsewhere, you can modify the docker-compose configuration by removing PostgreSQL and specifying the PostgreSQL address using environment variables. The application will be accessible at `http://localhost:8000` in the host server and the PostgreSQL will be accessible via port 15430.
+The application will be accessible at `http://localhost:8000` in the host server and the PostgreSQL will be accessible via port 15430.
 You can check the [docker-compose config](./docker-compose.yaml) to see all available variables you can set for running the application.
 
-### Deploying via docker
-
-To deploy the application by docker directly follow these steps:
-
-1. Build the docker image by running:
-
-```bash
-docker build --no-cache -t aana_summarize_video:latest .
-```
-
-2. Run the the image:
-```bash
-export DB_CONFIG='{"datastore_type":"postgresql","datastore_config":{"host":<PG_HOST>,"port":<PG_PORT>,"user":<PGUSER>,"password":<PG_PASSWORD>,"database":<PG_DB>}}'
-docker run --rm -it -v ~/.cache:/root/.cache -e CUDA_VISIBLE_DEVICES=0 -e DB_CONFIG=$DB_CONFIG -p 8000:8000 aana_summarize_video:latest
-```
-
-The Dockerfile is currently configured to utilize the base image `nvidia/cuda:12.1.1-cudnn8-devel-ubuntu22.04`. This particular image integrates CUDA and cuDNN, making it well-suited for applications that require GPU acceleration and deep learning functionalities. However, if you're planning to deploy the container on a server where the installed NVIDIA driver is incompatible with this specific image, you may need to modify the base image. It's essential to choose a version that aligns with the capabilities of the existing driver on your server to ensure optimal performance and functionality. Always verify the compatibility of the CUDA version with your server’s GPU driver to avoid any issues during deployment.
+**Base Image**
+The Dockerfile utilizes the image `nvidia/cuda:12.1.1-cudnn8-devel-ubuntu22.04`, which includes CUDA and cuDNN necessary for deployment operations. If you plan to run this container on a server that does not have a supported NVIDIA driver, you may need to modify the base image to ensure it functions correctly. Aana requires CUDA version 12.1, cuDNN version 8, and an NVIDIA driver version 525.60.13 or newer.
