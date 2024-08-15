@@ -101,6 +101,7 @@ docker build --no-cache -t aana_summarize_video:latest .
 
 2. Run the the image:
 ```bash
+export DB_CONFIG='{"datastore_type":"postgresql","datastore_config":{"host":<PG_HOST>,"port":<PG_PORT>,"user":<PGUSER>,"password":<PG_PASSWORD>,"database":<PG_DB>}}'
 docker run --rm -it -v ~/.cache:/root/.cache -e CUDA_VISIBLE_DEVICES=0 -e DB_CONFIG=$DB_CONFIG -p 8000:8000 aana_summarize_video:latest
 ```
 
