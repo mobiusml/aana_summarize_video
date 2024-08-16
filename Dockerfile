@@ -2,7 +2,7 @@
 FROM nvidia/cuda:12.1.1-cudnn8-devel-ubuntu22.04
 
 # Build args
-ARG INSTALL_FLASH_ATTEN=false
+ARG INSTALL_FLASH_ATTENTION=false
 
 # Set working directory
 WORKDIR /app
@@ -28,7 +28,7 @@ RUN poetry install
 
 # Install flash attention
 RUN poetry run pip install torch --index-url https://download.pytorch.org/whl/cu121
-RUN if [[ "$INSTALL_FLASH_ATTEN" = "true" ]] ; then \
+RUN if [[ "$INSTALL_FLASH_ATTENTION" = "true" ]] ; then \
       poetry run pip install flash-attn --no-build-isolation; \
     else \
       echo Skip flash_atten installation ; \

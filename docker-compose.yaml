@@ -41,14 +41,14 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
-        INSTALL_FLASH_ATTEN: '${INSTALL_FLASH_ATTEN:-false}'
+        INSTALL_FLASH_ATTENTION: '${INSTALL_FLASH_ATTENTION:-false}'
     deploy:
       resources:
         reservations:
           devices:
               - capabilities: ["gpu"]
     environment:
-      CUDA_VISIBLE_DEVICES: '${CUDA_VISIBLE_DEVICES}'
+      CUDA_VISIBLE_DEVICES:
       HF_HUB_ENABLE_HF_TRANSFER: '${HF_HUB_ENABLE_HF_TRANSFER:-1}'
       HF_TOKEN: '${HF_TOKEN}'
       HF_DATASETS_CACHE: /root/.cache/huggingface
