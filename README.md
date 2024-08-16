@@ -94,7 +94,7 @@ This command creates a new Docker image tagged as `aana_summarize_video:latest`,
 Once the image is built, you can run the application inside a Docker container using the following command:
 
 ```bash
-export DB_CONFIG='{"datastore_type": "sqlite", "datastore_config": {"path": "/tmp/db/aana_db.sqlite"}}'
+export DB_CONFIG='{"datastore_type":"sqlite","datastore_config":{"path":"/tmp/db/aana_db.sqlite"}}'
 docker run \
     --name aana_summarize_video_app \
     -v ~/aana/tmp:/tmp/aana_data \
