@@ -91,7 +91,7 @@ To run the application, simply run the following command:
 docker-compose up
 ```
 
-The application will be accessible at `http://localhost:8000` in the host server.
+The application will be accessible at `http://localhost:8000` on the host server.
 
 
 > **⚠️ Warning**
@@ -107,7 +107,7 @@ The application will be accessible at `http://localhost:8000` in the host server
 
 > **💡Tip**
 >
-> Some models use Flash Attention for better performance. You can set the build argument `INSTALL_FLASH_ATTEN` to `true` to install Flash Attention. 
+> Some models use Flash Attention for better performance. You can set the build argument `INSTALL_FLASH_ATTENTION` to `true` to install Flash Attention. 
 >
 > ```bash
 > INSTALL_FLASH_ATTENTION=true docker-compose build
